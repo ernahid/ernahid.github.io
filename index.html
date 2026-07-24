@@ -31,6 +31,8 @@
   <div class="pre-bar"><div class="pre-bar-fill" id="preBarFill"></div></div>
 </div>
 
+<div id="ambient"></div>
+<div id="cursorGlow"></div>
 <div id="scrollProgress"></div>
 <div id="toast"></div>
 
@@ -45,7 +47,6 @@
       </span>
     </a>
     <ul class="nav-links" id="navLinks">
-      <button class="nav-close" id="navClose" aria-label="মেনু বন্ধ করুন"><i class="fas fa-xmark"></i></button>
       <li><a href="#home" class="nav-link active">হোম</a></li>
       <li><a href="#about" class="nav-link">পরিচয়</a></li>
       <li><a href="#education" class="nav-link">শিক্ষা</a></li>
@@ -54,21 +55,17 @@
       <li><a href="#certificates" class="nav-link">সার্টিফিকেট</a></li>
       <li><a href="#contact" class="nav-link">যোগাযোগ</a></li>
     </ul>
-    <div class="nav-backdrop" id="navBackdrop"></div>
     <a href="#contact" class="nav-cta">কাজের কথা বলুন</a>
-    <button class="hamburger" id="hamburger" aria-label="মেনু খুলুন"><span></span><span></span><span></span></button>
+    <button class="hamburger" id="hamburger" aria-label="মেনু খুলুন / বন্ধ করুন" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </nav>
-
-<!-- ambient futuristic layer -->
-<div class="fx-cursor-glow" id="cursorGlow"></div>
-<div class="fx-orbs"><span class="orb orb-1"></span><span class="orb orb-2"></span><span class="orb orb-3"></span></div>
-<div class="fx-scanlines"></div>
+<div class="nav-overlay" id="navOverlay"></div>
 
 <!-- HERO -->
 <header class="hero" id="home">
   <div class="hero-bg"><img src="assets/skyline-blue-night.jpg" alt="City skyline" /></div>
   <div class="hero-grid"></div>
+  <canvas id="particles"></canvas>
   <svg class="hero-svg" viewBox="0 0 400 400" width="46%" style="right:0; top:8%;" preserveAspectRatio="xMidYMid meet">
     <path d="M20 380 L20 200 L120 200 L120 120 L260 120 L260 60 L380 60" />
     <path d="M120 200 L120 380 M260 120 L260 380 M20 380 L380 380" />

@@ -57,43 +57,39 @@ const toast = (msg, isError = false) => {
 const navbar = document.getElementById('navbar');
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('navLinks');
-const navClose = document.getElementById('navClose');
-const navBackdrop = document.getElementById('navBackdrop');
+const navOverlay = document.getElementById('navOverlay');
 const scrollTopBtn = document.getElementById('scrollTop');
 
-let lastScrollY = window.scrollY;
 window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    navbar.classList.toggle('scrolled', y > 40);
-    // smart hide-on-scroll-down, show-on-scroll-up (but never hide near top or while menu is open)
-    if (!navLinks.classList.contains('open')) {
-        if (y > lastScrollY && y > 160) navbar.classList.add('nav-hidden');
-        else navbar.classList.remove('nav-hidden');
-    }
-    lastScrollY = y;
-    scrollTopBtn.classList.toggle('show', y > 500);
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+    scrollTopBtn.classList.toggle('show', window.scrollY > 500);
     updateActiveNav();
 }, { passive: true });
 
-function openMobileNav() {
+// ===== MOBILE MENU (open / close / overlay / escape / body-lock) =====
+// Fixes the previous bug where the sliding panel visually covered the
+// hamburger button, leaving no way to close the menu on mobile.
+function openMenu() {
     hamburger.classList.add('open');
     navLinks.classList.add('open');
-    navBackdrop.classList.add('show');
-    document.body.style.overflow = 'hidden';
+    navOverlay.classList.add('show');
+    document.body.classList.add('nav-open');
+    hamburger.setAttribute('aria-expanded', 'true');
 }
-function closeMobileNav() {
+function closeMenu() {
     hamburger.classList.remove('open');
     navLinks.classList.remove('open');
-    navBackdrop.classList.remove('show');
-    document.body.style.overflow = '';
+    navOverlay.classList.remove('show');
+    document.body.classList.remove('nav-open');
+    hamburger.setAttribute('aria-expanded', 'false');
 }
 hamburger?.addEventListener('click', () => {
-    navLinks.classList.contains('open') ? closeMobileNav() : openMobileNav();
+    navLinks.classList.contains('open') ? closeMenu() : openMenu();
 });
-navClose?.addEventListener('click', closeMobileNav);
-navBackdrop?.addEventListener('click', closeMobileNav);
-navLinks?.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileNav));
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMobileNav(); });
+navOverlay?.addEventListener('click', closeMenu);
+navLinks?.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+window.addEventListener('resize', () => { if (window.innerWidth > 860) closeMenu(); });
 
 scrollTopBtn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
@@ -108,16 +104,6 @@ function updateActiveNav() {
     navAnchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
 }
 
-// ===== FUTURISTIC CURSOR GLOW (desktop only) =====
-const cursorGlow = document.getElementById('cursorGlow');
-if (cursorGlow && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    window.addEventListener('mousemove', (e) => {
-        cursorGlow.classList.add('active');
-        cursorGlow.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%,-50%)`;
-    }, { passive: true });
-    document.addEventListener('mouseleave', () => cursorGlow.classList.remove('active'));
-}
-
 // ===== SCROLL REVEAL (per-section animation variants + staggered grids) =====
 const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(e => {
@@ -126,7 +112,7 @@ const revealObserver = new IntersectionObserver((entries) => {
             revealObserver.unobserve(e.target);
         }
     });
-}, { threshold: 0.15 });
+}, { threshold: 0.1, rootMargin: '0px 0px -5% 0px' });
 
 function observeReveal(el) {
     const grid = el.closest('.stagger-grid');
@@ -137,6 +123,29 @@ function observeReveal(el) {
     revealObserver.observe(el);
 }
 document.querySelectorAll('.reveal, .timeline, .divider-draw').forEach(observeReveal);
+
+// Safety net: on some layouts (fast programmatic/inertial scrolling, elements
+// added dynamically by Firebase after the initial observe pass) the
+// IntersectionObserver can miss an element, leaving it permanently invisible.
+// This periodically force-reveals anything already sitting in the viewport.
+function forceRevealVisible() {
+    document.querySelectorAll('.reveal:not(.in-view), .timeline:not(.in-view), .divider-draw:not(.in-view)').forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight * 0.95 && r.bottom > 0) {
+            el.classList.add('in-view');
+            revealObserver.unobserve(el);
+        }
+    });
+}
+let revealCheckTicking = false;
+window.addEventListener('scroll', () => {
+    if (!revealCheckTicking) {
+        requestAnimationFrame(() => { forceRevealVisible(); revealCheckTicking = false; });
+        revealCheckTicking = true;
+    }
+}, { passive: true });
+window.addEventListener('load', forceRevealVisible);
+setTimeout(forceRevealVisible, 1200);
 
 // ===== SCROLL PROGRESS BAR =====
 const scrollProgressEl = document.getElementById('scrollProgress');
@@ -185,6 +194,73 @@ function initTilt(selector, max = 6) {
 initTilt('.project-card', 6);
 initTilt('.cert-card', 5);
 initTilt('.skill-card', 4);
+
+// ===== HERO PARTICLE FIELD (lightweight canvas — floating drafting nodes) =====
+(function initParticles() {
+    const canvas = document.getElementById('particles');
+    if (!canvas) return;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return;
+    const ctx = canvas.getContext('2d');
+    const hero = canvas.closest('.hero');
+    let w, h, dots = [];
+    const COUNT = window.innerWidth < 700 ? 26 : 50;
+
+    function resize() {
+        w = canvas.width = hero.clientWidth;
+        h = canvas.height = hero.clientHeight;
+        dots = Array.from({ length: COUNT }, () => ({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            vx: (Math.random() - 0.5) * 0.25,
+            vy: (Math.random() - 0.5) * 0.25,
+            r: Math.random() * 1.6 + 0.6
+        }));
+    }
+    function tick() {
+        ctx.clearRect(0, 0, w, h);
+        for (let i = 0; i < dots.length; i++) {
+            const d = dots[i];
+            d.x += d.vx; d.y += d.vy;
+            if (d.x < 0 || d.x > w) d.vx *= -1;
+            if (d.y < 0 || d.y > h) d.vy *= -1;
+            ctx.beginPath();
+            ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(79,230,255,0.55)';
+            ctx.fill();
+            for (let j = i + 1; j < dots.length; j++) {
+                const o = dots[j];
+                const dist = Math.hypot(d.x - o.x, d.y - o.y);
+                if (dist < 130) {
+                    ctx.beginPath();
+                    ctx.moveTo(d.x, d.y);
+                    ctx.lineTo(o.x, o.y);
+                    ctx.strokeStyle = `rgba(79,230,255,${0.14 * (1 - dist / 130)})`;
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(tick);
+    }
+    resize();
+    tick();
+    window.addEventListener('resize', resize, { passive: true });
+})();
+
+// ===== CURSOR GLOW (desktop only) =====
+(function initCursorGlow() {
+    const glow = document.getElementById('cursorGlow');
+    if (!glow || window.matchMedia('(hover:none), (pointer:coarse)').matches) return;
+    window.addEventListener('mousemove', (e) => {
+        glow.style.left = e.clientX + 'px';
+        glow.style.top = e.clientY + 'px';
+    }, { passive: true });
+    document.querySelectorAll('a, button, .project-card, .skill-card, .cert-card').forEach(el => {
+        el.addEventListener('mouseenter', () => glow.classList.add('active'));
+        el.addEventListener('mouseleave', () => glow.classList.remove('active'));
+    });
+})();
 
 // ===== MAGNETIC GLOW ON BUTTONS / FILTERS =====
 document.querySelectorAll('.btn, .nav-cta, .filter-btn').forEach(btn => {

@@ -21,12 +21,17 @@
 
 <!-- Preloader -->
 <div id="preloader">
+  <div class="pre-ring"></div>
+  <div class="pre-ring pre-ring-2"></div>
   <svg class="pre-draw" viewBox="0 0 180 120">
     <path d="M10 100 L10 40 L60 40 L60 20 L120 20 L120 60 L170 60 L170 100 Z M60 40 L60 100 M120 60 L120 100" />
   </svg>
-  <div class="pre-label">লোড হচ্ছে…</div>
+  <div class="pre-percent" id="prePercent">0%</div>
+  <div class="pre-label" id="preLabel">ব্লুপ্রিন্ট লোড হচ্ছে…</div>
+  <div class="pre-bar"><div class="pre-bar-fill" id="preBarFill"></div></div>
 </div>
 
+<div id="scrollProgress"></div>
 <div id="toast"></div>
 
 <!-- Navbar -->
@@ -66,16 +71,16 @@
   </svg>
 
   <div class="container hero-content">
-    <div class="hero-eyebrow title-block">DWG NO. 01 — HOME PROFILE</div>
-    <h1 class="hero-title">নির্ভুল ডিজাইন,<br>দৃঢ় <span class="accent">নির্মাণ।</span></h1>
-    <p class="hero-role" id="heroRole">সিভিল ও স্ট্রাকচারাল ইঞ্জিনিয়ার — RCC ডিজাইন | স্ট্রাকচারাল অ্যানালাইসিস | সাইট সুপারভিশন</p>
-    <p class="hero-desc" id="heroDesc">বাস্তব সাইট অভিজ্ঞতা আর কাঠামোগত নির্ভুলতা — এই দুটোকে একসাথে নিয়ে প্রতিটি প্রজেক্টে নিরাপদ ও টেকসই ডিজাইন নিশ্চিত করি, প্ল্যানিং থেকে হ্যান্ডওভার পর্যন্ত।</p>
-    <div class="hero-actions">
+    <div class="hero-eyebrow title-block hero-in" style="--d:0">DWG NO. 01 — HOME PROFILE</div>
+    <h1 class="hero-title hero-in" style="--d:1">নির্ভুল ডিজাইন,<br>দৃঢ় <span class="accent">নির্মাণ।</span></h1>
+    <p class="hero-role hero-in" style="--d:2" id="heroRole">সিভিল ও স্ট্রাকচারাল ইঞ্জিনিয়ার — RCC ডিজাইন | স্ট্রাকচারাল অ্যানালাইসিস | সাইট সুপারভিশন</p>
+    <p class="hero-desc hero-in" style="--d:3" id="heroDesc">বাস্তব সাইট অভিজ্ঞতা আর কাঠামোগত নির্ভুলতা — এই দুটোকে একসাথে নিয়ে প্রতিটি প্রজেক্টে নিরাপদ ও টেকসই ডিজাইন নিশ্চিত করি, প্ল্যানিং থেকে হ্যান্ডওভার পর্যন্ত।</p>
+    <div class="hero-actions hero-in" style="--d:4">
       <a href="#projects" class="btn btn-primary"><i class="fas fa-diagram-project"></i> প্রজেক্ট দেখুন</a>
       <a href="#contact" class="btn btn-ghost"><i class="fas fa-file-arrow-down"></i> সিভি ডাউনলোড</a>
     </div>
 
-    <div class="hero-stats" id="heroStats">
+    <div class="hero-stats hero-in" style="--d:5" id="heroStats">
       <div class="stat"><div class="stat-tick"></div><div class="stat-num">৮+</div><div class="stat-label">বছরের অভিজ্ঞতা</div></div>
       <div class="stat"><div class="stat-tick"></div><div class="stat-num">৫০+</div><div class="stat-label">সম্পন্ন প্রজেক্ট</div></div>
       <div class="stat"><div class="stat-tick"></div><div class="stat-num">১২</div><div class="stat-label">সার্টিফিকেশন</div></div>
@@ -87,16 +92,13 @@
 </header>
 
 <!-- ABOUT -->
-<section class="section" id="about">
+<section class="section about" id="about">
+  <div class="section-bg about-bg"><img src="assets/engineer-walking-site.jpg" alt="" /></div>
   <div class="container">
-    <div class="about-grid">
-      <div class="about-frame reveal">
-        <img src="assets/engineer-walking-site.jpg" alt="Engineer on construction site" />
-      </div>
-      <div class="about-copy reveal reveal-delay-1">
-        <div class="title-block">DWG NO. 02 — ABOUT</div>
-        <h2 class="section-title" style="margin-top:1rem;">পরিচয়</h2>
-        <p id="aboutP1">আমি তানভীর আহমেদ, একজন সিভিল ও স্ট্রাকচারাল ইঞ্জিনিয়ার। রেসিডেনশিয়াল, কমার্শিয়াল ও ইন্ডাস্ট্রিয়াল স্ট্রাকচার ডিজাইন এবং কনস্ট্রাকশন সুপারভিশনে দীর্ঘদিনের হাতে-কলমে অভিজ্ঞতা আছে।</p>
+    <div class="about-copy reveal" data-reveal="left">
+      <div class="title-block">DWG NO. 02 — ABOUT</div>
+      <h2 class="section-title" style="margin-top:1rem;">পরিচয়</h2>
+      <p id="aboutP1">আমি তানভীর আহমেদ, একজন সিভিল ও স্ট্রাকচারাল ইঞ্জিনিয়ার। রেসিডেনশিয়াল, কমার্শিয়াল ও ইন্ডাস্ট্রিয়াল স্ট্রাকচার ডিজাইন এবং কনস্ট্রাকশন সুপারভিশনে দীর্ঘদিনের হাতে-কলমে অভিজ্ঞতা আছে।</p>
         <p id="aboutP2">স্ট্রাকচারাল অ্যানালাইসিস, ফাউন্ডেশন ডিজাইন আর সাইট ম্যানেজমেন্ট — এই তিনটাকে একসাথে সামলে প্রতিটি প্রজেক্ট কোড-কমপ্লায়েন্ট, নিরাপদ ও বাজেটের মধ্যে শেষ করাই আমার লক্ষ্য। AutoCAD, ETABS, SAFE ও STAAD.Pro-তে দক্ষ।</p>
         <div class="about-meta">
           <div><span>অবস্থান</span><strong id="aboutLocation">ঢাকা, বাংলাদেশ</strong></div>
@@ -104,15 +106,15 @@
           <div><span>স্পেশালাইজেশন</span><strong id="aboutSpec">RCC স্ট্রাকচারাল ডিজাইন</strong></div>
           <div><span>এভেইলেবিলিটি</span><strong id="aboutAvail">নতুন প্রজেক্টের জন্য উন্মুক্ত</strong></div>
         </div>
-      </div>
     </div>
   </div>
 </section>
 
 <!-- EDUCATION -->
 <section class="section section--steel" id="education">
+  <div class="section-bg"><img src="assets/blueprint-dark-rolled.jpg" alt="" /></div>
   <div class="container">
-    <div class="section-head reveal">
+    <div class="section-head reveal" data-reveal="up">
       <div class="title-block">DWG NO. 03 — EDUCATION</div>
       <h2 class="section-title">শিক্ষাগত যোগ্যতা</h2>
       <p class="lead">একাডেমিক ভিত্তি যা প্রতিটি ডিজাইন সিদ্ধান্তের পেছনে কাজ করে।</p>
@@ -120,21 +122,21 @@
     <div class="timeline reveal" id="educationList">
       <div class="timeline-rail"><div class="timeline-rail-draw"></div></div>
 
-      <div class="tl-item">
+      <div class="tl-item reveal" data-reveal="left">
         <div class="tl-dot"></div>
         <div class="tl-year">২০১৪ — ২০১৮</div>
         <div class="tl-degree">B.Sc. in Civil Engineering</div>
         <div class="tl-inst">বাংলাদেশ প্রকৌশল বিশ্ববিদ্যালয় (উদাহরণ)</div>
         <div class="tl-note">CGPA 3.72 / 4.00 — Structural Engineering মেজর</div>
       </div>
-      <div class="tl-item">
+      <div class="tl-item reveal" data-reveal="right">
         <div class="tl-dot"></div>
         <div class="tl-year">২০১৯</div>
         <div class="tl-degree">Diploma — Structural Analysis &amp; Design (ETABS/SAFE)</div>
         <div class="tl-inst">প্রফেশনাল ট্রেনিং ইনস্টিটিউট (উদাহরণ)</div>
         <div class="tl-note">উচ্চতর কাঠামোগত মডেলিং সার্টিফিকেশন</div>
       </div>
-      <div class="tl-item">
+      <div class="tl-item reveal" data-reveal="left">
         <div class="tl-dot"></div>
         <div class="tl-year">২০২১</div>
         <div class="tl-degree">Certified Site Safety &amp; Quality Supervisor</div>
@@ -149,18 +151,18 @@
 <section class="skills-band" id="skills">
   <div class="skills-bg"><img src="assets/bridge-truss-lineart.jpg" alt="" /></div>
   <div class="container" style="position:relative; z-index:2; padding-top:clamp(4.5rem,9vw,8rem); padding-bottom:clamp(4.5rem,9vw,8rem);">
-    <div class="section-head reveal">
+    <div class="section-head reveal" data-reveal="up">
       <div class="title-block">DWG NO. 04 — SKILLS</div>
       <h2 class="section-title">দক্ষতা ও টুলস</h2>
       <p class="lead">ডিজাইন সফটওয়্যার থেকে শুরু করে সাইট-লেভেল সুপারভিশন — প্রতিটি ধাপে হাতে-কলমে কাজ করার অভিজ্ঞতা।</p>
     </div>
-    <div class="skills-grid" id="skillsGrid">
-      <div class="skill-card reveal" style="--lvl:92%"><div class="skill-icon"><i class="fas fa-drafting-compass"></i></div><div><div class="skill-name">AutoCAD</div><div class="skill-cat">ডিজাইন সফটওয়্যার</div></div><div class="skill-bar"><div class="skill-bar-fill"></div></div></div>
-      <div class="skill-card reveal" style="--lvl:88%"><div class="skill-icon"><i class="fas fa-building-columns"></i></div><div><div class="skill-name">ETABS / SAFE</div><div class="skill-cat">স্ট্রাকচারাল অ্যানালাইসিস</div></div><div class="skill-bar"><div class="skill-bar-fill"></div></div></div>
-      <div class="skill-card reveal" style="--lvl:80%"><div class="skill-icon"><i class="fas fa-bridge"></i></div><div><div class="skill-name">Bridge &amp; RCC Design</div><div class="skill-cat">স্ট্রাকচারাল ডিজাইন</div></div><div class="skill-bar"><div class="skill-bar-fill"></div></div></div>
-      <div class="skill-card reveal" style="--lvl:85%"><div class="skill-icon"><i class="fas fa-hard-hat"></i></div><div><div class="skill-name">সাইট সুপারভিশন</div><div class="skill-cat">কনস্ট্রাকশন ম্যানেজমেন্ট</div></div><div class="skill-bar"><div class="skill-bar-fill"></div></div></div>
-      <div class="skill-card reveal" style="--lvl:75%"><div class="skill-icon"><i class="fas fa-ruler-combined"></i></div><div><div class="skill-name">Land Surveying</div><div class="skill-cat">সাইট প্ল্যানিং</div></div><div class="skill-bar"><div class="skill-bar-fill"></div></div></div>
-      <div class="skill-card reveal" style="--lvl:82%"><div class="skill-icon"><i class="fas fa-calculator"></i></div><div><div class="skill-name">Quantity &amp; BOQ Estimation</div><div class="skill-cat">কস্ট ম্যানেজমেন্ট</div></div><div class="skill-bar"><div class="skill-bar-fill"></div></div></div>
+    <div class="skills-grid stagger-grid" id="skillsGrid">
+      <div class="skill-card reveal" data-reveal="scale" style="--lvl:92%"><div class="skill-icon"><i class="fas fa-drafting-compass"></i></div><div><div class="skill-name">AutoCAD</div><div class="skill-cat">ডিজাইন সফটওয়্যার</div></div><div class="skill-bar"><div class="skill-bar-fill"></div></div></div>
+      <div class="skill-card reveal" data-reveal="scale" style="--lvl:88%"><div class="skill-icon"><i class="fas fa-building-columns"></i></div><div><div class="skill-name">ETABS / SAFE</div><div class="skill-cat">স্ট্রাকচারাল অ্যানালাইসিস</div></div><div class="skill-bar"><div class="skill-bar-fill"></div></div></div>
+      <div class="skill-card reveal" data-reveal="scale" style="--lvl:80%"><div class="skill-icon"><i class="fas fa-bridge"></i></div><div><div class="skill-name">Bridge &amp; RCC Design</div><div class="skill-cat">স্ট্রাকচারাল ডিজাইন</div></div><div class="skill-bar"><div class="skill-bar-fill"></div></div></div>
+      <div class="skill-card reveal" data-reveal="scale" style="--lvl:85%"><div class="skill-icon"><i class="fas fa-hard-hat"></i></div><div><div class="skill-name">সাইট সুপারভিশন</div><div class="skill-cat">কনস্ট্রাকশন ম্যানেজমেন্ট</div></div><div class="skill-bar"><div class="skill-bar-fill"></div></div></div>
+      <div class="skill-card reveal" data-reveal="scale" style="--lvl:75%"><div class="skill-icon"><i class="fas fa-ruler-combined"></i></div><div><div class="skill-name">Land Surveying</div><div class="skill-cat">সাইট প্ল্যানিং</div></div><div class="skill-bar"><div class="skill-bar-fill"></div></div></div>
+      <div class="skill-card reveal" data-reveal="scale" style="--lvl:82%"><div class="skill-icon"><i class="fas fa-calculator"></i></div><div><div class="skill-name">Quantity &amp; BOQ Estimation</div><div class="skill-cat">কস্ট ম্যানেজমেন্ট</div></div><div class="skill-bar"><div class="skill-bar-fill"></div></div></div>
     </div>
   </div>
 </section>
@@ -168,44 +170,44 @@
 <!-- PROJECTS -->
 <section class="section" id="projects">
   <div class="container">
-    <div class="section-head reveal">
+    <div class="section-head reveal" data-reveal="up">
       <div class="title-block">DWG NO. 05 — PROJECTS</div>
       <h2 class="section-title">সম্পন্ন প্রজেক্টসমূহ</h2>
       <p class="lead">রেসিডেনশিয়াল থেকে ইন্ডাস্ট্রিয়াল — নির্বাচিত কিছু কাজের নমুনা।</p>
     </div>
-    <div class="filter-row reveal" id="projectFilters">
+    <div class="filter-row reveal" data-reveal="up" id="projectFilters">
       <button class="filter-btn active" data-filter="all">সকল</button>
       <button class="filter-btn" data-filter="residential">রেসিডেনশিয়াল</button>
       <button class="filter-btn" data-filter="commercial">কমার্শিয়াল</button>
       <button class="filter-btn" data-filter="infrastructure">ইনফ্রাস্ট্রাকচার</button>
     </div>
-    <div class="projects-grid" id="projectsGrid">
-      <div class="project-card reveal" data-cat="infrastructure">
+    <div class="projects-grid stagger-grid" id="projectsGrid">
+      <div class="project-card reveal" data-reveal="clip" data-cat="infrastructure">
         <img src="assets/bridge-blueprint-dimensions.jpg" alt="Bridge design project" />
         <div class="project-overlay"><div class="project-tag">ইনফ্রাস্ট্রাকচার · ২০২৩</div><div class="project-title">১০০ মিটার আর্চ ব্রিজ ডিজাইন</div><div class="project-loc">মাগুরা, বাংলাদেশ</div></div>
         <div class="project-corner"><i class="fas fa-arrow-up-right-from-square"></i></div>
       </div>
-      <div class="project-card reveal reveal-delay-1" data-cat="commercial">
+      <div class="project-card reveal" data-reveal="clip" data-cat="commercial">
         <img src="assets/construction-sunset-crane.jpg" alt="Commercial tower construction" />
         <div class="project-overlay"><div class="project-tag">কমার্শিয়াল · ২০২২</div><div class="project-title">১৮-তলা কমার্শিয়াল টাওয়ার</div><div class="project-loc">ঢাকা, বাংলাদেশ</div></div>
         <div class="project-corner"><i class="fas fa-arrow-up-right-from-square"></i></div>
       </div>
-      <div class="project-card reveal reveal-delay-2" data-cat="residential">
+      <div class="project-card reveal" data-reveal="clip" data-cat="residential">
         <img src="assets/construction-silhouette-orange.jpg" alt="Residential building construction" />
         <div class="project-overlay"><div class="project-tag">রেসিডেনশিয়াল · ২০২১</div><div class="project-title">৮-তলা রেসিডেনশিয়াল কমপ্লেক্স</div><div class="project-loc">চট্টগ্রাম, বাংলাদেশ</div></div>
         <div class="project-corner"><i class="fas fa-arrow-up-right-from-square"></i></div>
       </div>
-      <div class="project-card reveal" data-cat="infrastructure">
+      <div class="project-card reveal" data-reveal="clip" data-cat="infrastructure">
         <img src="assets/blueprint-floorplan-blue.jpg" alt="Structural floor plan" />
         <div class="project-overlay"><div class="project-tag">ইনফ্রাস্ট্রাকচার · ২০২০</div><div class="project-title">ইন্ডাস্ট্রিয়াল ওয়্যারহাউস স্ট্রাকচার</div><div class="project-loc">গাজীপুর, বাংলাদেশ</div></div>
         <div class="project-corner"><i class="fas fa-arrow-up-right-from-square"></i></div>
       </div>
-      <div class="project-card reveal reveal-delay-1" data-cat="commercial">
+      <div class="project-card reveal" data-reveal="clip" data-cat="commercial">
         <img src="assets/blueprint-floorplan-navy.jpg" alt="Commercial building blueprint" />
         <div class="project-overlay"><div class="project-tag">কমার্শিয়াল · ২০১৯</div><div class="project-title">শপিং কমপ্লেক্স স্ট্রাকচারাল ডিজাইন</div><div class="project-loc">সিলেট, বাংলাদেশ</div></div>
         <div class="project-corner"><i class="fas fa-arrow-up-right-from-square"></i></div>
       </div>
-      <div class="project-card reveal reveal-delay-2" data-cat="residential">
+      <div class="project-card reveal" data-reveal="clip" data-cat="residential">
         <img src="assets/engineer-desk-flatlay.jpg" alt="Residential design planning" />
         <div class="project-overlay"><div class="project-tag">রেসিডেনশিয়াল · ২০১৮</div><div class="project-title">প্রাইভেট ভিলা ডিজাইন ও সুপারভিশন</div><div class="project-loc">নারায়ণগঞ্জ, বাংলাদেশ</div></div>
         <div class="project-corner"><i class="fas fa-arrow-up-right-from-square"></i></div>
@@ -216,26 +218,27 @@
 
 <!-- CERTIFICATES -->
 <section class="section section--light" id="certificates">
+  <div class="section-bg"><img src="assets/abstract-white-diagonal.jpg" alt="" /></div>
   <div class="container">
-    <div class="section-head reveal">
+    <div class="section-head reveal" data-reveal="up">
       <div class="title-block">DWG NO. 06 — CERTIFICATES</div>
       <h2 class="section-title">সার্টিফিকেট ও স্বীকৃতি</h2>
       <p class="lead">প্রফেশনাল ট্রেনিং ও ইন্ডাস্ট্রি-স্বীকৃত সার্টিফিকেশনসমূহ।</p>
     </div>
-    <div class="cert-grid" id="certGrid">
-      <div class="cert-card reveal">
+    <div class="cert-grid stagger-grid" id="certGrid">
+      <div class="cert-card reveal" data-reveal="rotate">
         <div class="cert-thumb"><img src="assets/blueprint-dark-rolled.jpg" alt="" /></div>
         <div><div class="cert-title">Certified Structural Engineer</div><div class="cert-issuer">Institution of Engineers, Bangladesh</div><div class="cert-year">২০১৯</div></div>
       </div>
-      <div class="cert-card reveal reveal-delay-1">
+      <div class="cert-card reveal" data-reveal="rotate">
         <div class="cert-thumb"><img src="assets/bridge-truss-lineart.jpg" alt="" /></div>
         <div><div class="cert-title">Advanced ETABS &amp; SAFE Modeling</div><div class="cert-issuer">Professional Training Institute</div><div class="cert-year">২০২০</div></div>
       </div>
-      <div class="cert-card reveal reveal-delay-2">
+      <div class="cert-card reveal" data-reveal="rotate">
         <div class="cert-thumb"><img src="assets/world-map-white.jpg" alt="" /></div>
         <div><div class="cert-title">International Site Safety (OSHA)</div><div class="cert-issuer">OSHA Certification Board</div><div class="cert-year">২০২১</div></div>
       </div>
-      <div class="cert-card reveal">
+      <div class="cert-card reveal" data-reveal="rotate">
         <div class="cert-thumb"><img src="assets/abstract-white-diagonal.jpg" alt="" /></div>
         <div><div class="cert-title">Project Management Professional</div><div class="cert-issuer">PMI</div><div class="cert-year">২০২২</div></div>
       </div>
@@ -252,21 +255,22 @@
 
 <!-- CONTACT -->
 <section class="section section--steel" id="contact">
+  <div class="section-bg"><img src="assets/world-map-white.jpg" alt="" /></div>
   <div class="container">
-    <div class="section-head reveal">
+    <div class="section-head reveal" data-reveal="up">
       <div class="title-block">DWG NO. 07 — CONTACT</div>
       <h2 class="section-title">যোগাযোগ করুন</h2>
       <p class="lead">নতুন প্রজেক্ট নিয়ে কথা বলতে চান? নিচের ফর্মে বার্তা পাঠান অথবা সরাসরি যোগাযোগ করুন।</p>
     </div>
     <div class="contact-wrap">
-      <div class="contact-list reveal">
+      <div class="contact-list reveal" data-reveal="left">
         <div class="c-item"><div class="c-icon"><i class="fas fa-location-dot"></i></div><div><div class="c-label">ঠিকানা</div><div class="c-value" id="contactAddress">ঢাকা, বাংলাদেশ</div></div></div>
         <div class="c-item"><div class="c-icon"><i class="fas fa-phone"></i></div><div><div class="c-label">ফোন</div><div class="c-value" id="contactPhone">+৮৮০ ১XXX-XXXXXX</div></div></div>
         <div class="c-item"><div class="c-icon"><i class="fas fa-envelope"></i></div><div><div class="c-label">ইমেইল</div><div class="c-value" id="contactEmail">contact@example.com</div></div></div>
         <div class="c-item"><div class="c-icon"><i class="fas fa-clock"></i></div><div><div class="c-label">অফিস সময়</div><div class="c-value" id="contactHours">রবি–বৃহস্পতি, সকাল ৯টা – বিকাল ৬টা</div></div></div>
         <div class="map-frame"><iframe id="contactMap" src="https://www.google.com/maps?q=Dhaka,Bangladesh&output=embed" loading="lazy"></iframe></div>
       </div>
-      <form class="contact-form reveal reveal-delay-1" id="contactForm">
+      <form class="contact-form reveal" data-reveal="right" id="contactForm">
         <div class="form-row">
           <div class="form-group"><label for="msgName">পূর্ণ নাম</label><input type="text" id="msgName" required placeholder="আপনার নাম"></div>
           <div class="form-group"><label for="msgPhone">মোবাইল নম্বর</label><input type="tel" id="msgPhone" required placeholder="01XXXXXXXXX"></div>

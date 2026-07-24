@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Admin Panel — তানভীর আহমেদ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body">
+
+<!-- LOGIN -->
+<div class="login-page" id="loginPage">
+  <div class="login-card">
+    <div class="login-mark">TA</div>
+    <h1>Admin Login</h1>
+    <p>Site Content Management</p>
+    <div class="login-error" id="loginError">ইমেইল বা পাসওয়ার্ড সঠিক নয়।</div>
+    <form id="loginForm">
+      <div class="form-group"><label for="loginEmail">ইমেইল</label><input type="email" id="loginEmail" required autocomplete="username"></div>
+      <div class="form-group"><label for="loginPassword">পাসওয়ার্ড</label><input type="password" id="loginPassword" required autocomplete="current-password"></div>
+      <button type="submit" class="btn btn-primary"><i class="fas fa-right-to-bracket"></i> লগইন করুন</button>
+    </form>
+  </div>
+</div>
+
+<!-- ADMIN LAYOUT -->
+<div class="admin-layout" id="adminLayout">
+  <div class="admin-overlay" id="adminOverlay"></div>
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="admin-brand">
+      <div class="nav-mark">TA</div>
+      <div><div class="admin-brand-text">তানভীর আহমেদ</div><div class="admin-brand-sub">Control Panel</div></div>
+    </div>
+    <nav class="admin-nav">
+      <div class="admin-nav-item active" data-panel="dashboard"><i class="fas fa-gauge"></i> ড্যাশবোর্ড</div>
+      <div class="admin-nav-item" data-panel="profile"><i class="fas fa-user-pen"></i> প্রোফাইল ও যোগাযোগ</div>
+      <div class="admin-nav-item" data-panel="stats"><i class="fas fa-chart-simple"></i> স্ট্যাটস</div>
+      <div class="admin-nav-item" data-panel="education"><i class="fas fa-graduation-cap"></i> শিক্ষা</div>
+      <div class="admin-nav-item" data-panel="skills"><i class="fas fa-drafting-compass"></i> দক্ষতা</div>
+      <div class="admin-nav-item" data-panel="projects"><i class="fas fa-diagram-project"></i> প্রজেক্ট</div>
+      <div class="admin-nav-item" data-panel="certificates"><i class="fas fa-certificate"></i> সার্টিফিকেট</div>
+      <div class="admin-nav-item" data-panel="messages"><i class="fas fa-envelope"></i> বার্তা <span id="msgBadge"></span></div>
+    </nav>
+    <div class="admin-sidebar-foot">
+      <button class="logout-btn" id="logoutBtn"><i class="fas fa-power-off"></i> লগআউট</button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <button class="admin-hamburger" id="adminHamburger"><i class="fas fa-bars"></i></button>
+      <div class="topbar-title" id="topbarTitle">ড্যাশবোর্ড</div>
+      <a href="index.html" target="_blank" style="font-family:var(--f-mono); font-size:.78rem; color:var(--cyan-dim);"><i class="fas fa-arrow-up-right-from-square"></i> সাইট দেখুন</a>
+    </div>
+
+    <div class="admin-content">
+
+      <!-- DASHBOARD -->
+      <section class="panel active" id="panel-dashboard">
+        <div class="panel-head"><div><h2>স্বাগতম 👋</h2><p class="panel-desc">তোমার সাইটের একনজর অবস্থা</p></div></div>
+        <div class="dash-grid">
+          <div class="dash-card"><div class="dash-num" id="dashEdu">—</div><div class="dash-label">শিক্ষা এন্ট্রি</div></div>
+          <div class="dash-card"><div class="dash-num" id="dashSkills">—</div><div class="dash-label">দক্ষতা</div></div>
+          <div class="dash-card"><div class="dash-num" id="dashProjects">—</div><div class="dash-label">প্রজেক্ট</div></div>
+          <div class="dash-card"><div class="dash-num" id="dashCerts">—</div><div class="dash-label">সার্টিফিকেট</div></div>
+          <div class="dash-card"><div class="dash-num" id="dashMsgs">—</div><div class="dash-label">নতুন বার্তা</div></div>
+        </div>
+      </section>
+
+      <!-- PROFILE -->
+      <section class="panel" id="panel-profile">
+        <div class="panel-head"><div><h2>প্রোফাইল ও যোগাযোগ</h2><p class="panel-desc">Hero, About ও Contact সেকশনের তথ্য এখান থেকে বদলাও</p></div></div>
+        <form class="admin-form" id="profileForm" style="background:#fff; border:1px solid var(--concrete-2); padding:1.6rem; max-width:680px;">
+          <div class="form-group"><label>নাম</label><input id="p_name" placeholder="তানভীর আহমেদ"></div>
+          <div class="form-group"><label>পদবী / রোল (Hero সাবটাইটেল)</label><input id="p_role" placeholder="সিভিল ও স্ট্রাকচারাল ইঞ্জিনিয়ার"></div>
+          <div class="form-group"><label>Hero বর্ণনা</label><textarea id="p_desc" rows="3"></textarea></div>
+          <div class="form-group"><label>About — অনুচ্ছেদ ১</label><textarea id="p_aboutP1" rows="3"></textarea></div>
+          <div class="form-group"><label>About — অনুচ্ছেদ ২</label><textarea id="p_aboutP2" rows="3"></textarea></div>
+          <div class="form-group"><label>অবস্থান</label><input id="p_location"></div>
+          <div class="form-group"><label>অভিজ্ঞতা (টেক্সট, যেমন "৮+ বছর")</label><input id="p_experience"></div>
+          <div class="form-group"><label>স্পেশালাইজেশন</label><input id="p_specialization"></div>
+          <div class="form-group"><label>এভেইলেবিলিটি</label><input id="p_availability"></div>
+          <div class="form-group"><label>ঠিকানা (Contact সেকশন)</label><input id="p_address"></div>
+          <div class="form-group"><label>ফোন</label><input id="p_phone"></div>
+          <div class="form-group"><label>ইমেইল</label><input id="p_email"></div>
+          <div class="form-group"><label>অফিস সময়</label><input id="p_hours"></div>
+          <div class="form-group"><label>Google Map Embed URL</label><input id="p_mapEmbedUrl" placeholder="https://www.google.com/maps?q=...&output=embed"></div>
+          <div class="form-group"><label>Facebook URL</label><input id="p_facebook"></div>
+          <div class="form-group"><label>LinkedIn URL</label><input id="p_linkedin"></div>
+          <div class="form-group"><label>WhatsApp লিংক</label><input id="p_whatsapp" placeholder="https://wa.me/8801XXXXXXXXX"></div>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-floppy-disk"></i> সেভ করুন</button>
+        </form>
+      </section>
+
+      <!-- STATS -->
+      <section class="panel" id="panel-stats">
+        <div class="panel-head"><div><h2>Hero স্ট্যাটস</h2><p class="panel-desc">হোমপেজের ৪টি সংখ্যা</p></div></div>
+        <form class="admin-form" id="statsForm" style="background:#fff; border:1px solid var(--concrete-2); padding:1.6rem; max-width:500px;">
+          <div class="form-group"><label>বছরের অভিজ্ঞতা</label><input id="s_experience" placeholder="৮+"></div>
+          <div class="form-group"><label>সম্পন্ন প্রজেক্ট</label><input id="s_projects" placeholder="৫০+"></div>
+          <div class="form-group"><label>সার্টিফিকেশন</label><input id="s_certifications" placeholder="১২"></div>
+          <div class="form-group"><label>সন্তুষ্ট ক্লায়েন্ট</label><input id="s_clients" placeholder="৩০+"></div>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-floppy-disk"></i> সেভ করুন</button>
+        </form>
+      </section>
+
+      <!-- EDUCATION -->
+      <section class="panel" id="panel-education">
+        <div class="panel-head"><div><h2>শিক্ষাগত যোগ্যতা</h2><p class="panel-desc">টাইমলাইনে যেভাবে দেখাবে, উপর থেকে নিচে</p></div><button class="add-btn" data-add="education"><i class="fas fa-plus"></i> নতুন যোগ করুন</button></div>
+        <div class="item-list" id="list-education"></div>
+      </section>
+
+      <!-- SKILLS -->
+      <section class="panel" id="panel-skills">
+        <div class="panel-head"><div><h2>দক্ষতা</h2><p class="panel-desc">Font Awesome আইকন নাম দাও, যেমন: fa-drafting-compass</p></div><button class="add-btn" data-add="skills"><i class="fas fa-plus"></i> নতুন যোগ করুন</button></div>
+        <div class="item-list" id="list-skills"></div>
+      </section>
+
+      <!-- PROJECTS -->
+      <section class="panel" id="panel-projects">
+        <div class="panel-head"><div><h2>প্রজেক্টসমূহ</h2><p class="panel-desc">ছবি Cloudinary-তে আপলোড হবে</p></div><button class="add-btn" data-add="projects"><i class="fas fa-plus"></i> নতুন যোগ করুন</button></div>
+        <div class="item-list" id="list-projects"></div>
+      </section>
+
+      <!-- CERTIFICATES -->
+      <section class="panel" id="panel-certificates">
+        <div class="panel-head"><div><h2>সার্টিফিকেট</h2><p class="panel-desc">প্রতিটি সার্টিফিকেটের ছবি ও ইস্যুয়ার যোগ করো</p></div><button class="add-btn" data-add="certificates"><i class="fas fa-plus"></i> নতুন যোগ করুন</button></div>
+        <div class="item-list" id="list-certificates"></div>
+      </section>
+
+      <!-- MESSAGES -->
+      <section class="panel" id="panel-messages">
+        <div class="panel-head"><div><h2>যোগাযোগ ফর্মের বার্তা</h2><p class="panel-desc">Contact ফর্ম থেকে আসা বার্তাসমূহ</p></div></div>
+        <div class="item-list" id="list-messages"></div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- GENERIC ADD/EDIT MODAL -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal">
+    <h3 id="modalTitle">যোগ করুন</h3>
+    <form class="admin-form" id="modalForm"></form>
+  </div>
+</div>
+
+<!-- CONFIRM MODAL -->
+<div class="modal-backdrop" id="confirmModal">
+  <div class="modal confirm-modal">
+    <h3><i class="fas fa-triangle-exclamation" style="color:var(--orange);"></i> নিশ্চিত করুন</h3>
+    <p id="confirmText">এই আইটেমটি মুছে ফেলতে চাও?</p>
+    <div class="confirm-actions">
+      <button class="btn btn-outline" id="confirmNo">বাতিল</button>
+      <button class="btn btn-primary" id="confirmYes">মুছে ফেলুন</button>
+    </div>
+  </div>
+</div>
+
+<div class="admin-toast" id="adminToast"></div>
+
+<script type="module" src="admin-script.js"></script>
+</body>
+</html>
